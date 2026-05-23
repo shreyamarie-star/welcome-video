@@ -5,47 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>APOS Welcome</title>
   <style>
+    @font-face {
+      font-family: 'Aileron';
+      src: url('Aileron-Bold.otf') format('opentype');
+      font-weight: 700;
+    }
+
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     html, body {
       width: 100%;
       height: 100%;
-      background: #1e0E4B;
+      background: #450D8C;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2vh;
     }
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
+
+    .welcome {
+      font-family: 'Aileron', sans-serif;
+      font-weight: 700;
+      font-size: clamp(28px, 4vw, 72px);
+      color: #ffffff;
+      opacity: 0;
+      animation: fadeIn 1.2s ease-in-out 1s forwards;
+    }
+
+    .logo {
+      width: clamp(200px, 45%, 520px);
+      opacity: 0;
+      animation: fadeIn 1.2s ease-in-out 2.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <video id="vid" loop muted playsinline preload="auto">
-    <source src="apos_welcome.mp4" type="video/mp4" />
-  </video>
-  <script>
-    const vid = document.getElementById('vid');
-
-    // Try to autoplay immediately
-    function tryPlay() {
-      vid.play().catch(() => {});
-    }
-
-    // Attempt on load
-    vid.addEventListener('canplaythrough', tryPlay);
-    tryPlay();
-
-    // Fallback: play on any user interaction with the page or parent frame
-    ['click', 'touchstart', 'pointerdown', 'keydown', 'scroll'].forEach(e => {
-      document.addEventListener(e, tryPlay, { once: true });
-      window.addEventListener(e, tryPlay, { once: true });
-    });
-
-    // Also listen for visibility change (Brella may hide/show the iframe)
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) tryPlay();
-    });
-  </script>
+  <div class="welcome">Welcome To</div>
+  <img class="logo" src="apos_logo.png" alt="APOS" />
 </body>
 </html>
